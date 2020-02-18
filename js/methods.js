@@ -102,9 +102,9 @@ class Mask {
     }
 
     set_figure(figure) {
-        this.__figure = figure.get();
+        this.__figure = figure;
         this.__offset_left = Math.floor(
-            (this.__width - this.__figure[0].length) / 2
+            (this.__width - this.__figure.get()[0].length) / 2
         );
     }
 
@@ -113,9 +113,10 @@ class Mask {
     }
 
     merge() {
-        for (var i = 0; i < this.__figure.length; ++i) {
-            for (var j = 0; j < this.__figure[0].length; ++j) {
-                this.__mask[i + this.__offset_top][j + this.__offset_left] = this.__figure[i][j]
+        var figure_data = this.__figure.get();
+        for (var i = 0; i < figure_data.length; ++i) {
+            for (var j = 0; j < figure_data[0].length; ++j) {
+                this.__mask[i + this.__offset_top][j + this.__offset_left] = figure_data[i][j]
             }
         }
     }
@@ -145,13 +146,16 @@ class Mask {
         }
     }
     get_mask() {
-        // var result = new Array();
-        // for (var i = 0; i < this.__height; ++i) {
-        //     for (var j = 0; j < this.__width; ++j) {
-        //         result[i * this.__width + j] = this.__mask[i];
-        //     }
-        // }
-        // return result;
         return this.__mask;
+    }
+}
+
+
+var apply = (mask, field) => {
+    var data = mask.get_mask();
+    for (var i = 0; i < FIELD_HEIGHT; ++i) {
+        for (var j = 0; j < FIELD_WIDTH; ++j) {
+            field.set_cell(i, j, data[i][j])
+        }
     }
 }
