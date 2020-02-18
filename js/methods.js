@@ -110,6 +110,10 @@ class Mask {
 
     turn_figure() {
         this.__figure.turn();
+        if ((this.__offset_left + this.__figure.get()[0].length) >= FIELD_WIDTH) {
+            this.__offset_left = FIELD_WIDTH - this.__figure.get()[0].length;
+        }
+        // проверка на высоту
     }
 
     merge() {
@@ -121,7 +125,7 @@ class Mask {
         }
     }
 
-    clean_mask() {
+    clean() {
         for (var i = 0; i < this.__height; ++i) {
             for (var j = 0; j < this.__width; ++j) {
                 this.__mask[i][j] = false;
@@ -130,7 +134,7 @@ class Mask {
     }
 
     move_right() {
-        if ((this.__offset_left + this.__figure[0].length) < this.__width - 1) {
+        if ((this.__offset_left + this.__figure.get()[0].length) < this.__width) {
             ++this.__offset_left;
         }
     }
@@ -141,7 +145,7 @@ class Mask {
         }
     }
     step() {
-        if ((this.__offset_top + this.__figure.length) < this.__height - 1) {
+        if ((this.__offset_top + this.__figure.get().length) < this.__height) {
             ++this.__offset_top
         }
     }

@@ -10,11 +10,48 @@ field.show();
 
 
 $("body").keypress((event) => {
-    console.log(event.code);
-    if(event.code == "KeyA") {
-        console.log("LEFT");
-    }
-    if(event.code == "KeyD") {
-        console.log("RIGHT")
+    switch(event.code) {
+        case "KeyA": {
+            console.log("LEFT");
+            field.clean();
+            mask.clean();
+            mask.move_left();
+            mask.merge();
+            apply(mask, field);
+            field.show();
+            break;
+        }
+        case "KeyD": {
+            console.log("RIGHT");
+            field.clean();
+            mask.clean();
+            mask.move_right();
+            mask.merge();
+            apply(mask, field);
+            field.show();
+            break;
+        }
+        case "KeyW": {
+            console.log("TURN");
+            field.clean();
+            mask.clean();
+            mask.turn_figure();
+            mask.merge();
+            apply(mask, field);
+            field.show();
+            break;
+        }
+        default: {
+            console.log(event.code);
+        }
     }
 });
+var speed = 3000;
+var speed_interval = setInterval(() => {
+    field.clean();
+    mask.clean();
+    mask.step();
+    mask.merge()
+    apply(mask, field);
+    field.show();
+}, speed)
